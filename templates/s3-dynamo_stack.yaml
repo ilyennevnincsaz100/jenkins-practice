@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  HashKeyElementName:
+    Type: String
+    Default: SomeId
+    Description: Hash Key Name
+  HashKeyElementType:
+    Type: String
+    Default: S
+    Description: Hash Key Type
+  CustomBucketName:
+    Type: String
+    Default: lambdafunction-bucket-qweasd1234
+    Description: Bucket Name
+Resources:
+  S3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties: 
+      BucketName: !Ref CustomBucketName
+  SomeTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: SomeTable
+      AttributeDefinitions:
+        -
+          AttributeName: !Ref HashKeyElementName
+          AttributeType: !Ref HashKeyElementType
+      KeySchema:
+        -
+          AttributeName: !Ref HashKeyElementName
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+Outputs:
+  BucketNameS3:
+    Description: Outputs the s3 bucket name
+    Value: !Ref S3Bucket
+    Export:
+      Name: 
+        Fn::Sub: '${AWS::StackName}-S3Bucket'
+  

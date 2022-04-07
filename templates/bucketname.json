@@ -1,0 +1,6 @@
+[
+    {
+      "ParameterKey": "CustomBucketName",
+      "ParameterValue": "lambda-apigw-bucket-paramf3f34g3"
+    }
+]
